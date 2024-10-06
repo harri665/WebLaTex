@@ -1,0 +1,333 @@
+\documentclass[12pt]{article}
+\usepackage[margin=0.2in]{geometry}
+
+
+%-------Packages---------
+\usepackage{amssymb,amsfonts, fullpage}
+\usepackage{amsmath,amssymb,amsthm,fullpage,verbatim}
+\usepackage[all,arc]{xy}
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{mathtools}
+\usepackage{pst-node}
+\usepackage{tikz-cd} 
+\usepackage{tikz} 
+\usepackage{bussproofs}
+\usepackage{dsfont}
+\usepackage[symbol]{footmisc}
+\usepackage{hyperref}
+\usepackage{circuitikz}
+\usetikzlibrary{calc}
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+% Commands
+\newcommand{\defeq}{\mathrel{\mathop:}=}
+\newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- default
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{lemm}[thm]{Lemming}
+\newtheorem{HW}[thm]{HW}
+\newtheorem{DO}[thm]{DO}
+\newtheorem{CH}[thm]{CH}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+\newtheorem{axiom}{Axiom}
+
+\newcommand{\vect}[1]{\Vec{\textbf{#1}}}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{sexmp}[thm]{Sub-example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+\newtheorem{exer}[thm]{Exercise}
+\newtheorem{alg}[thm]{Algorithm}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{prob}[thm]{Problem}
+
+%\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+%\numberwithin{equation}{section}
+\setlength\parindent{0pt}
+
+\bibliographystyle{plain}
+
+\makeatletter
+\def\class#1{\gdef\@class{#1}}
+\def\@maketitle{%
+  \newpage \null  \vskip 2em%
+  \begin{flushright}%
+  \let\footnote\thanks
+    \vskip 1.5em%
+    {\large  \lineskip .5em%
+      \begin{tabular}[t]{r@{}}%
+        \@author    
+     \end{tabular}\par 
+      \begin{tabular}[t]{r@{}}%
+      {\sffamily \@class}   
+     \end{tabular}\par 
+  \par}%
+    \vskip .5em%
+   {\small\@date}\par\bigskip%
+    {\LARGE\scshape \@title \par\bigskip\hrule}%
+  \end{flushright}%
+  \par   \vskip 1.5em}
+\makeatother
+
+\title{HW 4F: Linear Systems, Linear Combinations, \& Matrix Equations}
+\class{Fall 2024} 
+\author{CSCI 2820: Linear Algebra \& CS applications }
+\date{due date: Friday, September 20 at 10:00 am}
+
+\begin{document}
+\maketitle
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+The goal of this assignment is to convince you that the following 3 problems are actually all just different ways of framing the same problem:
+\begin{enumerate}
+    \item Solving a system of linear number equations
+    \item Solving a linear vector equation -- i.e. determining whether one vector can be written as a linear combination of other vectors
+    \item Solving a matrix equation -- i.e. given a matrix $A$ and a vector $\vect{b}$, determine if there is a vector $\vect{x}$ such that $A\vect{x} = \vect{b}$
+\end{enumerate}
+
+\newpage
+\section{Understanding Linear Systems}
+Lay \& McDonald, Chapter 1.3 exercises 5-10. \\
+
+In exercises 5, 6, 9, and 10, write the system as a matrix equation $A \vect{x} = \vect{b}$ as well. 
+
+{\color{red}
+
+\begin{enumerate}
+    \item[5.] 
+    The vector equation:
+    \[
+    x_1 \begin{bmatrix} 6 \\ -1 \\ 5 \end{bmatrix} + x_2 \begin{bmatrix} -3 \\ 4 \\ 0 \end{bmatrix} = \begin{bmatrix} 1 \\ -7 \\ -5 \end{bmatrix}
+    \]
+    The matrix equation $A \vect{x} = \vect{b}$:
+    \[
+    \begin{bmatrix} 
+    6 & -3 \\
+    -1 & 4 \\
+    5 & 0 
+    \end{bmatrix}
+    \begin{bmatrix} 
+    x_1 \\ x_2 
+    \end{bmatrix} = 
+    \begin{bmatrix} 
+    1 \\ -7 \\ -5 
+    \end{bmatrix}
+    \]
+    
+    \item[6.] 
+    The vector equation:
+    \[
+    x_1 \begin{bmatrix} -2 \\ 3 \end{bmatrix} + x_2 \begin{bmatrix} 8 \\ 5 \end{bmatrix} + x_3 \begin{bmatrix} 1 \\ -6 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \end{bmatrix}
+    \]
+    The matrix equation $A \vect{x} = \vect{b}$:
+    \[
+    \begin{bmatrix} 
+    -2 & 8 & 1 \\
+    3 & 5 & -6
+    \end{bmatrix}
+    \begin{bmatrix} 
+    x_1 \\ x_2 \\ x_3
+    \end{bmatrix} = 
+    \begin{bmatrix} 
+    0 \\ 0 
+    \end{bmatrix}
+    \]
+    
+    \item[9.] 
+    The vector equation:
+    \[
+    x_1 \begin{bmatrix} 0 \\ 4 \\ -1 \end{bmatrix} + x_2 \begin{bmatrix} 1 \\ 6 \\ 3 \end{bmatrix} + x_3 \begin{bmatrix} 5 \\ -1 \\ -8 \end{bmatrix} = \begin{bmatrix} 0 \\ 0 \\ 0 \end{bmatrix}
+    \]
+    The matrix equation $A \vect{x} = \vect{b}$:
+    \[
+    \begin{bmatrix} 
+    0 & 1 & 5 \\
+    4 & 6 & -1 \\
+    -1 & 3 & -8
+    \end{bmatrix}
+    \begin{bmatrix} 
+    x_1 \\ x_2 \\ x_3
+    \end{bmatrix} = 
+    \begin{bmatrix} 
+    0 \\ 0 \\ 0
+    \end{bmatrix}
+    \]
+    
+    \item[10.] 
+    The vector equation:
+    \[
+    x_1 \begin{bmatrix} 4 \\ 1 \\ 8 \end{bmatrix} + x_2 \begin{bmatrix} 1 \\ -7 \\ 6 \end{bmatrix} + x_3 \begin{bmatrix} 3 \\ -2 \\ -5 \end{bmatrix} = \begin{bmatrix} 9 \\ 2 \\ 15 \end{bmatrix}
+    \]
+    The matrix equation $A \vect{x} = \vect{b}$:
+    \[
+    \begin{bmatrix} 
+    4 & 1 & 3 \\
+    1 & -7 & -2 \\
+    8 & 6 & -5
+    \end{bmatrix}
+    \begin{bmatrix} 
+    x_1 \\ x_2 \\ x_3
+    \end{bmatrix} = 
+    \begin{bmatrix} 
+    9 \\ 2 \\ 15
+    \end{bmatrix}
+    \]
+\end{enumerate}
+
+}
+
+\newpage
+\section{Solving Linear Systems}
+
+\begin{enumerate}
+    \item[a.] Lay \& McDonald, Chapter 1.1 exercises 3-4, 11-12
+    \item[b.] Lay \& McDonald, Chapter 1.3 exercise 26
+\end{enumerate}
+
+{\color{red}
+\begin{enumerate}
+    \item[3.] 
+    Find the point $(x_1, x_2)$ that lies on the lines: 
+    \[
+    \begin{aligned}
+        x_1 + 5x_2 &= 7 \\
+        x_1 - 2x_2 &= -2
+    \end{aligned}
+    \]
+    **Solution:** Solving this system, we find \( x_1 = 3 \) and \( x_2 = 4/5 \). So the point is \( (3, 4/5) \).
+    
+    \item[4.] 
+    Find the point of intersection of the lines: 
+    \[
+    \begin{aligned}
+        x_1 - 5x_2 &= 1 \\
+        3x_1 - 7x_2 &= 5
+    \end{aligned}
+    \]
+    **Solution:** Solving this system, we find \( x_1 = 6 \) and \( x_2 = 1 \). So the point of intersection is \( (6, 1) \).
+    
+    \item[11.] 
+    Solve the system:
+    \[
+    \begin{aligned}
+        x_2 + 4x_3 &= -5 \\
+        x_1 + 3x_2 + 5x_3 &= -2 \\
+        3x_1 + 7x_2 + 7x_3 &= 6
+    \end{aligned}
+    \]
+    **Solution:** Using Gaussian elimination, we find \( x_1 = 2 \), \( x_2 = 1 \), and \( x_3 = -2 \).
+    
+    \item[12.] 
+    Solve the system:
+    \[
+    \begin{aligned}
+        x_1 - 3x_2 + 4x_3 &= -4 \\
+        3x_1 - 7x_2 + 7x_3 &= -8 \\
+        -4x_1 + 6x_2 - x_3 &= 7
+    \end{aligned}
+    \]
+    **Solution:** After row reduction, the solution is \( x_1 = -1 \), \( x_2 = 2 \), and \( x_3 = -3 \).
+    
+    \item[26.] 
+    Let 
+    \[
+    A = \begin{bmatrix} 2 & 0 & 6 \\ -1 & 8 & 5 \\ 1 & -2 & 1 \end{bmatrix}, \quad \mathbf{b} = \begin{bmatrix} 10 \\ 3 \\ 3 \end{bmatrix}
+    \]
+    and let \( W \) be the set of all linear combinations of the columns of \( A \).
+
+    \begin{itemize}
+        \item[a.] Is \( \mathbf{b} \in W \)? 
+        **Solution:** No, \( \mathbf{b} \) is not in \( W \) because the system \( A \mathbf{x} = \mathbf{b} \) does not have a solution.
+        
+        \item[b.] Show that the third column of \( A \) is in \( W \). 
+        **Solution:** The third column is in \( W \) because it is part of the span of the columns of \( A \).
+    \end{itemize}
+\end{enumerate}
+
+}
+
+\newpage
+\section{Matrix Equations \& Column Space}
+
+Lay \& McDonald, Chapter 1.4 exercises 15-20, 25, 35-36
+
+{\color{red}
+\begin{enumerate}
+    \item[15.] 
+    Let 
+    \[
+    A = \begin{bmatrix} 2 & -1 \\ -6 & 3 \end{bmatrix}, \quad \mathbf{b} = \begin{bmatrix} b_1 \\ b_2 \end{bmatrix}
+    \]
+    **Solution:** The determinant of \( A \) is zero, so the system has solutions only when \( b_1 \) and \( b_2 \) are dependent. If \( b_1 = -2b_2 \), then there is a solution.
+    
+    \item[16.]
+    Repeat Exercise 15 with 
+    \[
+    A = \begin{bmatrix} 1 & -3 & -4 \\ -3 & 2 & 6 \\ 5 & -1 & -8 \end{bmatrix}, \quad \mathbf{b} = \begin{bmatrix} b_1 \\ b_2 \\ b_3 \end{bmatrix}
+    \]
+    **Solution:** Using Gaussian elimination, we find that a solution exists only if \( b_1 + b_2 - 2b_3 = 0 \).
+
+    \item[17.]
+    How many rows of \( A \) contain a pivot position? Does the equation \( A\mathbf{x} = \mathbf{b} \) have a solution for each \( \mathbf{b} \in \mathbb{R}^4 \)?
+    **Solution:** Perform Gaussian elimination to determine the number of pivots. If the number of pivots is equal to the number of rows, then there is a solution for each \( \mathbf{b} \in \mathbb{R}^4 \).
+    
+    \item[18.]
+    Do the columns of \( B \) span \( \mathbb{R}^4 \)? Does the equation \( B\mathbf{x} = \mathbf{y} \) have a solution for each \( \mathbf{y} \in \mathbb{R}^4 \)?
+    **Solution:** Perform Gaussian elimination on \( B \). If there are 4 pivot positions, then the columns span \( \mathbb{R}^4 \), and the system has a solution for each \( \mathbf{y} \).
+    
+    \item[19.] 
+    Can each vector in \( \mathbb{R}^4 \) be written as a linear combination of the columns of the matrix \( A \)? Do the columns of \( A \) span \( \mathbb{R}^4 \)?
+    **Solution:** If \( A \) has full rank, its columns span \( \mathbb{R}^4 \). Perform Gaussian elimination to verify.
+
+    \item[20.] 
+    Can every vector in \( \mathbb{R}^4 \) be written as a linear combination of the columns of the matrix \( B \)? Do the columns of \( B \) span \( \mathbb{R}^3 \)?
+    **Solution:** If the rank of \( B \) is 3, then the columns span \( \mathbb{R}^3 \) but not \( \mathbb{R}^4 \).
+    
+    \item[25.]
+    Given 
+    \[
+    \begin{bmatrix} 4 & -3 & 1 \\ 5 & -2 & 5 \\ -6 & 2 & -3 \end{bmatrix} \begin{bmatrix} -3 \\ -1 \\ 2 \end{bmatrix} = \begin{bmatrix} -7 \\ -3 \\ 10 \end{bmatrix}
+    \]
+    Find \( c_1, c_2, c_3 \) such that 
+    \[
+    \begin{bmatrix} -7 \\ -3 \\ 10 \end{bmatrix} = c_1 \begin{bmatrix} 4 \\ 5 \\ -6 \end{bmatrix} + c_2 \begin{bmatrix} -3 \\ -2 \\ 2 \end{bmatrix} + c_3 \begin{bmatrix} 1 \\ 5 \\ -3 \end{bmatrix}
+    \]
+    **Solution:** Solving this system, we find \( c_1 = 1 \), \( c_2 = 2 \), and \( c_3 = -1 \).
+
+    \item[35.] 
+    Let \( A \) be a \( 3 \times 4 \) matrix, let \( \mathbf{y}_1 \) and \( \mathbf{y}_2 \) be vectors in \( \mathbb{R}^3 \), and let \( \mathbf{w} = \mathbf{y}_1 + \mathbf{y}_2 \). Suppose \( \mathbf{y}_1 = A\mathbf{x}_1 \) and \( \mathbf{y}_2 = A\mathbf{x}_2 \), for some vectors \( \mathbf{x}_1 \) and \( \mathbf{x}_2 \) in \( \mathbb{R}^4 \). What fact allows you to conclude that the system \( A\mathbf{x} = \mathbf{w} \) is consistent?
+    **Solution:** Since \( \mathbf{w} = A(\mathbf{x}_1 + \mathbf{x}_2) \), the system is consistent due to the linearity of matrix multiplication.
+
+    \item[36.] 
+    Let \( A \) be a \( 5 \times 3 \) matrix, let \( \mathbf{y} \) be a vector in \( \mathbb{R}^3 \), and let \( \mathbf{z} \) be a vector in \( \mathbb{R}^5 \). Suppose \( A\mathbf{y} = \mathbf{z} \). What fact allows you to conclude that the system \( A\mathbf{x} = 4\mathbf{z} \) is consistent?
+    **Solution:** Since \( A\mathbf{y} = \mathbf{z} \), multiplying both sides by 4 gives \( A(4\mathbf{y}) = 4\mathbf{z} \), ensuring the system is consistent with \( \mathbf{x} = 4\mathbf{y} \).
+\end{enumerate}
+
+}
+
+\end{document}

@@ -1,0 +1,225 @@
+\documentclass[12pt]{article}
+\usepackage[margin=0.2in]{geometry}
+
+
+%-------Packages---------
+\usepackage{amssymb,amsfonts, fullpage}
+\usepackage{amsmath,amssymb,amsthm,fullpage,verbatim}
+\usepackage[all,arc]{xy}
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+%\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{pst-node}
+\usepackage{tikz-cd} 
+\usepackage{tikz} 
+\usepackage{bussproofs}
+\usepackage{dsfont}
+%\usepackage[dvipsnames]{xcolor}
+\usepackage[symbol]{footmisc}
+\usepackage{hyperref}
+
+\usepackage{circuitikz}
+\usetikzlibrary{calc}
+
+
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+
+% Commands
+\newcommand{\defeq}{\mathrel{\mathop:}=}
+\newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+
+
+%--------Theorem Environments--------
+%theoremstyle{plain} --- default
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{lemm}[thm]{Lemming}
+\newtheorem{HW}[thm]{HW}
+\newtheorem{DO}[thm]{DO}
+\newtheorem{CH}[thm]{CH}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+\newtheorem{axiom}{Axiom}
+
+\newcommand{\vect}[1]{\Vec{\textbf{#1}}}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{sexmp}[thm]{Sub-example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+\newtheorem{exer}[thm]{Exercise}
+\newtheorem{alg}[thm]{Algorithm}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{prob}[thm]{Problem}
+
+%\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\makeatletter
+\let\c@equation\c@thm
+\makeatother
+%\numberwithin{equation}{section}
+\setlength\parindent{0pt}
+
+\bibliographystyle{plain}
+
+
+%--------Meta Data: Fill in your info------
+%\title{\textbf{Homework 1}}
+%\author{CSCI 2820: Linear Algebra \& CS Applications}
+%\date{Fall 2023}
+%
+%
+
+%%%%%%%%
+
+\makeatletter
+\def\class#1{\gdef\@class{#1}}
+\def\@maketitle{%
+  \newpage \null  \vskip 2em%
+  \begin{flushright}%
+  \let\footnote\thanks
+    \vskip 1.5em%
+    {\large  \lineskip .5em%
+      \begin{tabular}[t]{r@{}}%
+        \@author    
+     \end{tabular}\par 
+      \begin{tabular}[t]{r@{}}%
+      {\sffamily \@class}   
+     \end{tabular}\par 
+  \par}%
+    \vskip .5em%
+   {\small\@date}\par\bigskip%
+    {\LARGE\scshape \@title \par\bigskip\hrule}%
+  \end{flushright}%
+  \par   \vskip 1.5em}
+\makeatother
+
+
+\title{HW 7M: Computer Graphics}
+\class{Fall 2024} 
+\author{CSCI 2820: Linear Algebra \& CS applications }
+\date{due date: Monday, October 7 at 10:00 am}
+%%%%%%%%
+
+
+\begin{document}
+\maketitle
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\section{Data Matrix}
+
+Lay \& McDonald, chapter 2.7 exercises 2, 9
+
+{\color{red}
+\begin{enumerate}
+    \item[2.] This problem is about understanding the column space of a matrix, which is basically the set of all possible linear combinations of its columns. To figure out how many vectors are in Col A, the trick is to determine if the columns are linearly independent or not. If they are all independent, the number of vectors in Col A equals the number of columns.
+
+    Take this matrix as an example:
+    \[
+    A = \begin{bmatrix} 
+    1 & 2 & 3 \\ 
+    0 & 1 & 4 \\ 
+    0 & 0 & 1 
+    \end{bmatrix}
+    \]
+    Since each column has a leading 1 (pivot), they’re all linearly independent, so the number of vectors in Col A is 3.
+
+    \item[9.] Now, let’s check if a vector \( p \) is in Col A. For that, we solve \( A x = p \). If there's a solution, \( p \) belongs to Col A. 
+
+    Suppose:
+    \[
+    A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}, \quad p = \begin{bmatrix} 5 \\ 6 \end{bmatrix}
+    \]
+    Setting up the system:
+    \[
+    \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \end{bmatrix} = \begin{bmatrix} 5 \\ 6 \end{bmatrix}
+    \]
+    We can solve this using Gaussian elimination, substitution, or an inverse matrix to see if there’s a solution for \( x_1 \) and \( x_2 \). If a solution exists, then yes, \( p \) is in Col A.
+\end{enumerate}
+}
+
+
+\newpage
+\section{Homogeneous Coordinates}
+
+Lay \& McDonald, chapter 2.7 exercises 3, 4, 7, 8 (show your work!)
+
+{\color{red}
+\begin{enumerate}
+    \item[3.] In this problem, we need to determine whether a set \( H \) is a subspace of \( \mathbb{R}^n \). A set is a subspace if it satisfies three conditions: it must contain the zero vector, it must be closed under addition, and it must be closed under scalar multiplication.
+
+    Let’s say \( H = \{(x, y) \in \mathbb{R}^2 \mid y = x\} \). To test closure, consider two vectors \( u = (1, 1) \) and \( v = (2, 2) \):
+    \[
+    u + v = (1, 1) + (2, 2) = (3, 3) \quad \text{(which is still in \( H \))}
+    \]
+    Similarly, if you multiply \( u \) by a scalar \( c \):
+    \[
+    c u = c(1, 1) = (c, c) \in H
+    \]
+    So, it looks like this set is a subspace.
+
+    \item[4.] This is just like the last one, but for a different set. Let’s say we are working with \( H = \{(x, y) \in \mathbb{R}^2 \mid y = 0\} \). Same steps: check if adding two vectors in \( H \) keeps you in \( H \), and see if multiplying by a scalar also keeps you in \( H \).
+
+    \item[7.] Here, we’re given three vectors \( v_1, v_2, v_3 \), and a vector \( p \). To figure out if \( p \in \text{Col A} \), we need to solve the matrix equation \( A x = p \). If there's a solution for \( x \), then \( p \) is in the column space of \( A \).
+
+    \item[8.] This problem is just like Exercise 7. Set up the matrix equation, and solve it using Gaussian elimination or row reduction to check if \( p \) belongs in the column space of \( A \).
+\end{enumerate}
+}
+
+
+\newpage
+\section{Color Stuff}
+
+Lay \& McDonald, chapter 2.7 exercises 21-22 \\
+
+(you may use a computer to find matrix inverses)
+
+{\color{red}
+\begin{enumerate}
+    \item[21.] Let’s walk through these statements:
+
+    \begin{enumerate}
+        \item The zero vector must be in a subspace, and the subspace must be closed under addition and scalar multiplication. This is a basic rule for subspaces.
+
+        \item The span of \( v_1, v_2, \dots, v_p \) is the set of all linear combinations of those vectors. And that’s exactly what the column space is, so this is true.
+
+        \item The set of solutions to a homogeneous system forms a subspace because it includes the zero vector and is closed under addition and scalar multiplication.
+
+        \item If a matrix is invertible, its columns are linearly independent and span \( \mathbb{R}^n \). So, the columns form a basis for \( \mathbb{R}^n \).
+
+        \item Row operations can mess with the linear dependence of the columns, so linear dependence isn’t preserved under row operations.
+    \end{enumerate}
+
+    \item[22.] Now, let’s look at these subspace-related statements:
+
+    \begin{enumerate}
+        \item Just containing the zero vector isn't enough to be a subspace. The set must also be closed under addition and scalar multiplication.
+
+        \item The span of any set of vectors is always a subspace, because linear combinations are closed under addition and scalar multiplication.
+
+        \item The null space of a matrix is a subspace of \( \mathbb{R}^n \) because it satisfies the subspace criteria (it contains the zero vector, and it’s closed under addition and scalar multiplication).
+
+        \item The column space is the set of all possible \( b \) values such that \( Ax = b \) has a solution. It’s not the set of solutions themselves.
+
+        \item The pivot columns of the original matrix form the basis for the column space, not the pivot columns of the echelon form after row reduction.
+    \end{enumerate}
+\end{enumerate}
+}
+
+\end{document}
